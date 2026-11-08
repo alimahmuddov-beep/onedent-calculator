@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OneDent — интерактивный калькулятор</title>
+<style>
+:root{--blue:#2563eb;--green:#16834a;--ink:#172033;--muted:#64748b;--line:#dbe2ea;--bg:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Arial,sans-serif}
+main{max-width:1120px;margin:28px auto;padding:0 16px}.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 14px #16233a0a}
+h1{font-size:25px;margin:0 0 6px}h2{font-size:19px;margin:0 0 12px}.muted,.hint{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-weight:600;font-size:13px;margin-bottom:5px}
+input,select,button{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:9px;background:white;color:var(--ink);max-width:100%}
+input:focus,select:focus{outline:2px solid #93c5fd;border-color:var(--blue)}
+button{cursor:pointer;background:var(--blue);color:white;border-color:var(--blue);font-weight:600}button.secondary{background:white;color:var(--ink);border-color:var(--line)}button.danger{background:#fff;color:#b42318;border-color:#fecaca}
+.chart{width:100%;height:auto;display:block;margin:8px auto 18px;max-width:900px;touch-action:manipulation}
+.tooth-shape{cursor:pointer;outline:none}.tooth-shape path{fill:#fff;stroke:#64748b;stroke-width:2.2;transition:.15s}.tooth-shape text{font: bold 15px Arial;fill:#263449;text-anchor:middle;pointer-events:none}.tooth-shape.work path{fill:#b9f2ce;stroke:#16834a;stroke-width:3}.tooth-shape.implant path{fill:#bfdbfe;stroke:#2563eb;stroke-width:3}.tooth-shape.both path{fill:#e9d5ff;stroke:#9333ea;stroke-width:3}.tooth-shape:focus path{stroke:#111827;stroke-width:4}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:8px 0}.legend span{display:flex;align-items:center;gap:5px}.dot{width:12px;height:12px;border-radius:4px;display:inline-block}
+.quad{font-size:12px;color:var(--muted);font-weight:bold;margin:8px 0 4px}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary div{background:#f8fafc;padding:10px;border-radius:9px;overflow-wrap:anywhere}
+.summary strong{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+.row{display:grid;grid-template-columns:2fr 1.4fr .7fr .9fr auto;gap:8px;align-items:end;padding:10px 0;border-bottom:1px solid var(--line)}
+.row.header{font-size:12px;color:var(--muted);font-weight:bold;padding-top:0}
+.row input,.row select{width:100%}.total{font-size:23px;font-weight:700;text-align:right;margin-top:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:700px){.grid,.summary{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}.row.header{display:none}.row .job{grid-column:1/-1}.chart{max-width:100%}}
+@media print{body{background:white}.panel{box-shadow:none;break-inside:avoid}button,.actions{display:none}}
+</style>
+</head>
+<body><main>
+<header><h1>OneDent — интерактивный калькулятор</h1><div class="muted">Отметьте зубы на схеме, добавьте работы — количество зубов и сумма по каждой работе рассчитаются автоматически. Данные сохраняются в этом браузере.</div></header>
+<section class="panel">
+<h2>Пациент</h2><div class="grid"><div><label for="patient">ФИО / название заказа</label><input id="patient" placeholder="Введите имя пациента"></div><div><label for="date">Дата</label><input id="date" type="date"></div></div>
+</section>
+<section class="panel">
+<h2>Зубная формула</h2><p class="hint">Нажмите список под номером зуба и выберите статус. Зелёный — работа, синий — имплантат, фиолетовый — оба статуса.</p>
+<div class="legend"><span><i class="dot" style="background:#b9f2ce"></i> Работа</span><span><i class="dot" style="background:#bfdbfe"></i> Имплантат</span><span><i class="dot" style="background:#e9d5ff"></i> Работа + имплантат</span><span>Нажимайте на зуб, чтобы менять статус</span></div>
+<div class="quad">ВЕРХНЯЯ ЧЕЛЮСТЬ · вид спереди</div><svg class="chart" id="upper" viewBox="0 0 800 220" role="group" aria-label="Верхняя зубная дуга"></svg>
+<div class="quad">НИЖНЯЯ ЧЕЛЮСТЬ · вид спереди</div><svg class="chart" id="lower" viewBox="0 0 800 220" role="group" aria-label="Нижняя зубная дуга"></svg>
+<div class="summary"><div><strong>Зубы для работы</strong><span id="workTeeth">—</span></div><div><strong>Имплантаты</strong><span id="implantTeeth">—</span></div></div>
+<div class="actions"><button class="secondary" id="clearTeeth">Очистить зубную формулу</button></div>
+</section>
+<section class="panel">
+<h2>Смета</h2><div class="row header"><div>Работа</div><div>Зубы (авто; можно изменить)</div><div>Кол-во зубов</div><div>Цена за зуб, ₽</div><div></div></div>
+<div id="items"></div>
+<div class="actions"><button id="add">＋ Добавить работу</button><button class="secondary" id="copy">Скопировать смету</button><button class="secondary" id="upload">＋ Загрузить файлы</button><input id="fileInput" type="file" multiple hidden><button class="secondary" id="email">Отправить по почте</button><button class="secondary" onclick="window.print()">Печать / PDF</button><button class="danger" id="reset">Сбросить всё</button></div>
+<div id="fileList" class="muted" style="margin-top:10px">Файлы не выбраны</div>
+<div class="total">Итого: <span id="total">0</span> ₽</div>
+</section>
+<footer class="muted" style="text-align:center;padding:8px 0 28px">OneDent · Локальный HTML-калькулятор. Выбранные файлы отображаются в списке. Автоматическая отправка сметы и вложений заработает после подключения почтового сервиса.</footer>
+</main>
+<script>
+const priceList=[
+["Цельнофрезерованная циркониевая коронка на имплантате (по сканам)",9500],
+["Титановое основание GEO",700],
+["Печать 3D модели",600],
+["Цельнофрезерованная циркониевая коронка на культе (по сканам)",7500],
+["ПММА коронка на культе (по сканам)",2000],
+["ПММА коронка на имплантате (по сканам)",3000],
+["WaxUP",1000]
+];
+const upper=[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28], lower=[48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+const statuses=["—","Работа","Имплантат","Работа + имплантат"];
+const state={teeth:{},items:[],patient:"",date:""};
+const $=id=>document.getElementById(id);
+function renderChart(id,nums){const root=$(id);root.innerHTML="";const ns="http://www.w3.org/2000/svg";nums.forEach((n,i)=>{const g=document.createElementNS(ns,"g");g.setAttribute("class","tooth-shape");g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",`Зуб ${n}: ${statuses[+(state.teeth[n]||0)]}. Нажмите, чтобы изменить статус`);const leftHalf=i<8;const local=i%8;const x=leftHalf?54+local*48:746-(local*48);const arch=local<4?0:1;const y=id==="upper"?(arch===0?130+Math.abs(3.5-local)*10:130+Math.abs(3.5-local)*10):(arch===0?70+Math.abs(3.5-local)*10:70+Math.abs(3.5-local)*10);const angle=id==="upper"?(leftHalf?-12+local*3:12-local*3):(leftHalf?12-local*3:-12+local*3);g.setAttribute("transform",`translate(${x},${y}) rotate(${angle})`);const path=document.createElementNS(ns,"path");path.setAttribute("d","M -16 -19 Q -22 -27 -13 -30 Q -4 -33 0 -26 Q 4 -33 13 -30 Q 22 -27 16 -19 L 12 14 Q 9 23 4 18 L 0 9 L -4 18 Q -9 23 -12 14 Z");const label=document.createElementNS(ns,"text");label.setAttribute("y","43");label.textContent=n;g.append(path,label);const paint=()=>{g.classList.remove("work","implant","both");const v=state.teeth[n]||"0";if(v==="1")g.classList.add("work");if(v==="2")g.classList.add("implant");if(v==="3")g.classList.add("both");g.setAttribute("aria-label",`Зуб ${n}: ${statuses[+v]}. Нажмите, чтобы изменить статус`)};const cycle=()=>{state.teeth[n]=String(((+(state.teeth[n]||0))+1)%4);paint();renderItems();update();save()};g.addEventListener("click",cycle);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();cycle()}});paint();root.append(g)})}
+function chosen(kind){return [...upper,...lower].filter(n=>{const v=state.teeth[n]||"0";return kind==="work"?(v==="1"||v==="3"):(v==="2"||v==="3")})}
+function update(){const w=chosen("work"),im=chosen("implant");$("workTeeth").textContent=w.length?w.join(", "):"—";$("implantTeeth").textContent=im.length?im.join(", "):"—";$("total").textContent=state.items.reduce((s,x)=>s+x.qty*x.price,0).toLocaleString("ru-RU")}
+function teethForJob(jobIndex){const name=priceList[jobIndex][0].toLowerCase();return (name.includes("имплантат")?chosen("implant"):chosen("work"))}
+function countTeeth(text){const found=(text.match(/\b(?:1[1-8]|2[1-8]|3[1-8]|4[1-8])\b/g)||[]);return [...new Set(found)].length}
+function renderItems(){const root=$("items");root.innerHTML="";state.items.forEach((it,i)=>{const r=document.createElement("div");r.className="row";const opts=priceList.map(([n,p],j)=>`<option value="${j}">${n}</option>`).join("");const autoTeeth=teethForJob(it.job);const teethText=(it.teeth&&it.teeth.trim())?it.teeth:autoTeeth.join(", ");const qty=countTeeth(teethText);it.qty=qty;r.innerHTML=`<div class="job"><select class="jobsel">${opts}</select></div><div><input class="teeth" placeholder="Номера из формулы"></div><div><input class="qty" type="number" min="0" step="1" value="${qty}" readonly title="Количество определяется по выбранным зубам"></div><div><input class="price" type="number" min="0" step="1" value="${it.price}"></div><div><button class="danger del" title="Удалить">×</button></div>`;const sel=r.querySelector(".jobsel");sel.value=String(it.job);sel.addEventListener("change",()=>{it.job=+sel.value;it.price=priceList[it.job][1];it.teeth="";renderItems();update();save()});r.querySelector(".price").addEventListener("input",e=>{it.price=Math.max(0,+e.target.value||0);update();save()});const teethInput=r.querySelector(".teeth");teethInput.value=it.teeth||"";teethInput.placeholder=`Авто: ${autoTeeth.join(", ")||"выберите зубы на схеме"}`;teethInput.addEventListener("input",e=>{it.teeth=e.target.value;const newQty=countTeeth(it.teeth.trim()?it.teeth:autoTeeth.join(", "));it.qty=newQty;r.querySelector(".qty").value=newQty;update();save()});r.querySelector(".del").addEventListener("click",()=>{state.items.splice(i,1);renderItems();update();save()});root.append(r)})}
+function addItem(){state.items.push({job:0,qty:1,price:priceList[0][1],teeth:""});renderItems();update();save()}
+function save(){try{state.patient=$("patient").value;state.date=$("date").value;localStorage.setItem("onedentCalc",JSON.stringify(state))}catch(e){}}
+function load(){try{const x=JSON.parse(localStorage.getItem("onedentCalc")||"null");if(x)Object.assign(state,x)}catch(e){}}
+function report(){let lines=[`OneDent — ${$("patient").value||"Без имени"}`,`Дата: ${$("date").value||"—"}`,`Зубы для работы: ${chosen("work").join(", ")||"—"}`,`Имплантаты: ${chosen("implant").join(", ")||"—"}`,"","Работы:"];state.items.forEach(it=>lines.push(`${priceList[it.job][0]} | зубы: ${it.teeth||teethForJob(it.job).join(", ")||"—"} | ${it.qty} зуб. × ${it.price} = ${it.qty*it.price} ₽`));lines.push("",`ИТОГО: ${state.items.reduce((s,x)=>s+x.qty*x.price,0)} ₽`);return lines.join("\n")}
+function downloadQuote(){const blob=new Blob([report()],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;const safe=($("patient").value||"Пациент").trim().replace(/[^\p{L}\p{N}_-]+/gu,"_");a.download=`OneDent_смета_${safe}.txt`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function emailQuote(){const recipient=prompt("На какой адрес отправить смету?");if(recipient===null)return;const address=recipient.trim();if(address&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address)){alert("Проверьте адрес электронной почты.");return}downloadQuote();const subject=`Смета OneDent — ${$("patient").value||"заказ"}`;const body=`Здравствуйте!\\n\\nНаправляю смету OneDent. Файл сметы скачан на устройство — прикрепите его к этому письму.\\n\\n${report()}`;const mailto=`mailto:${encodeURIComponent(address)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;window.location.href=mailto}
+let selectedFiles=[];
+function renderFileList(){const box=$("fileList");if(!selectedFiles.length){box.textContent="Файлы не выбраны";return}box.innerHTML="<strong>Выбранные файлы:</strong> ";selectedFiles.forEach((file,index)=>{const item=document.createElement("div");item.style.cssText="display:flex;gap:8px;align-items:center;margin-top:5px;flex-wrap:wrap";const name=document.createElement("span");name.textContent=`${file.name} (${(file.size/1024).toFixed(1)} КБ)`;const remove=document.createElement("button");remove.type="button";remove.className="danger";remove.textContent="Убрать";remove.addEventListener("click",()=>{selectedFiles.splice(index,1);renderFileList()});item.append(name,remove);box.append(item)})}
+$("upload").onclick=()=>$("fileInput").click();$("fileInput").addEventListener("change",e=>{const incoming=[...e.target.files];incoming.forEach(file=>{if(!selectedFiles.some(x=>x.name===file.name&&x.size===file.size&&x.lastModified===file.lastModified))selectedFiles.push(file)});e.target.value="";renderFileList()});
+load();$("patient").value=state.patient||"";$("date").value=state.date||new Date().toISOString().slice(0,10);renderChart("upper",upper);renderChart("lower",lower);if(!state.items.length)addItem();else renderItems();update();
+$("add").onclick=addItem;$("email").onclick=emailQuote;$("clearTeeth").onclick=()=>{state.teeth={};state.items.forEach(it=>it.teeth="");renderChart("upper",upper);renderChart("lower",lower);renderItems();update();save()};$("reset").onclick=()=>{if(confirm("Удалить все данные калькулятора?")){localStorage.removeItem("onedentCalc");location.reload()}};$("copy").onclick=async()=>{try{await navigator.clipboard.writeText(report());$("copy").textContent="Скопировано!";setTimeout(()=>$("copy").textContent="Скопировать смету",1500)}catch(e){prompt("Скопируйте смету:",report())}};$("patient").oninput=save;$("date").onchange=save;
+</script></body></html>
