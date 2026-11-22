@@ -1,13 +1,61 @@
 <!doctype html>
-<html lang="ru" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NRLAB CLOUD — Заказ наряд онлайн</title><meta name="referrer" content="no-referrer"><meta name="description" content="Облачная система заказов NRLAB TEST CLOUD — клиники, врачи, зубная формула, файлы и счета"><style>
+<html lang="ru" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NRLAB CLOUD — Заказ наряд онлайн · Classic Live</title><meta name="referrer" content="no-referrer"><meta name="description" content="Облачная система заказов NRLAB TEST CLOUD — клиники, врачи, зубная формула, файлы и счета"><style>
 :root{--bg:#0b161a;--side:#132126;--panel:#1a2b31;--panel2:#23363c;--fg:#edf7f4;--muted:#a4b8b8;--border:#34494d;--accent:#66c5b1;--accent2:#337e75;--alert:#e8ac6e;--good:#77d4a5;--danger:#f28b8b;color-scheme:dark;font:15px/1.5 Inter,'Segoe UI',Arial,sans-serif}
 :root[data-theme=light]{--bg:#f2f6f6;--side:#e9f2f1;--panel:#fff;--panel2:#ecf4f2;--fg:#1d3439;--muted:#657e7f;--border:#d7e5e2;--accent:#197d70;--accent2:#197d70;--alert:#8c5d1b;--good:#187a54;--danger:#ba3d43;color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg)}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--accent)}.hidden{display:none!important}.shell{display:flex;min-height:100vh}.sidebar{position:sticky;top:0;align-self:start;width:254px;flex:none;height:100vh;background:var(--side);border-right:1px solid var(--border);padding:24px 14px;display:flex;flex-direction:column;gap:9px}.brand{font-size:24px;font-weight:850;display:flex;align-items:center;gap:11px;letter-spacing:-.035em}.logo{background:var(--accent2);border-radius:13px;width:38px;height:38px;display:grid;place-items:center;color:#fff}.eyebrow{font-size:10px;letter-spacing:.14em;color:var(--accent);font-weight:800}.nav{display:grid;gap:4px;margin-top:18px;overflow-y:auto}.nav button{background:transparent;border:0;text-align:left;color:var(--muted);padding:12px;border-radius:11px;font-weight:680}.nav button.active,.nav button:hover{background:var(--panel2);color:var(--fg)}.sb-foot{margin-top:auto;padding:10px;font-size:12px;color:var(--muted)}.main{flex:1;min-width:0}.topbar{height:68px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 26px;gap:10px;background:var(--side)}.content{max-width:1320px;padding:28px;margin:auto}.head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px}.head h1{margin:3px 0 4px;font-size:31px;letter-spacing:-.04em}.muted{color:var(--muted)}.small{font-size:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:17px}.card h2{font-size:19px;margin:0 0 12px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.kpi{font-size:31px;font-weight:800;letter-spacing:-.035em}.row{display:flex;align-items:center;gap:11px;flex-wrap:wrap}.between{justify-content:space-between}.grow{flex:1;min-width:160px}.btn{background:var(--panel2);color:var(--fg);border:1px solid var(--border);padding:10px 14px;border-radius:11px;font-weight:700;min-height:42px}.btn:hover{filter:brightness(1.12)}.btn.primary{background:var(--accent2);color:white;border-color:transparent}.btn.warn{color:var(--danger)}.btn:disabled{opacity:.5;cursor:default}.field{display:flex;flex-direction:column;gap:6px;min-width:150px;flex:1}.field label{font-size:12px;font-weight:730;color:var(--muted)}input,select,textarea{padding:10px 12px;background:var(--panel2);border:1px solid var(--border);color:var(--fg);border-radius:10px;min-height:43px;width:100%;outline:none}input:focus,select:focus,textarea:focus{outline:2px solid var(--accent2)}input[type=checkbox]{width:17px;min-height:17px;accent-color:var(--accent)}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:660px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}th{font-size:11px;letter-spacing:.04em;color:var(--muted)}td button{white-space:nowrap}.pill{border-radius:22px;display:inline-block;padding:4px 10px;background:var(--panel2);font-size:11px;font-weight:700}.pill.ready,.pill.delivered{color:var(--good);background:#3e9d7230}.pill.paid{color:#a5f2be;background:#3a90593a}.pill.pending{color:var(--alert)}.empty{padding:25px;border-radius:12px;border:1px dashed var(--border);text-align:center;color:var(--muted)}.tooth-types{display:flex;gap:9px;flex-wrap:wrap}.tooth-type{display:flex;align-items:center;gap:9px;max-width:260px;background:var(--panel2);border:1px solid var(--border);border-radius:11px;padding:10px 11px;color:var(--fg);font-size:12px;font-weight:720;text-align:left}.tooth-type.active{outline:2px solid var(--accent);outline-offset:1px}.swatch{width:13px;height:13px;border-radius:4px;flex:none}.teeth-grid{display:grid;grid-template-columns:repeat(16,minmax(32px,1fr));gap:5px;margin:14px 0}.tooth{position:relative;padding:9px 0;min-width:0;border:1px solid var(--border);border-radius:9px;background:var(--panel2);color:var(--fg);font-weight:800}.tooth span{font-size:9px;display:block;margin-top:4px;opacity:.85}.selected-items{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--border);background:var(--panel2);border-radius:11px;padding:8px 10px;font-size:12px}.auth{max-width:950px;margin:8vh auto;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:20px}.auth-hero{padding:30px;display:flex;justify-content:center;flex-direction:column}.auth-hero h1{font-size:clamp(34px,4.5vw,52px);line-height:1.1;letter-spacing:-.05em}.auth-form{padding:28px}.auth-form h2{font-size:24px}.auth-form form{display:grid;gap:14px}.link{background:none;color:var(--accent);border:0;text-decoration:underline;cursor:pointer}.notice{background:#77caaa1a;border:1px solid #75b99e42;border-radius:12px;padding:14px;margin:14px 0}.error{background:#ba383421;border:1px solid #de6e6c66;color:var(--danger);border-radius:12px;padding:12px;margin:12px 0}.warning{background:#df994c1c;border:1px solid #cf904e4e;color:var(--alert);border-radius:12px;padding:12px;margin:12px 0}.modal{border:1px solid var(--border);border-radius:18px;background:var(--panel);color:var(--fg);width:min(790px,calc(100vw - 26px));max-height:85vh;overflow:auto;box-shadow:0 25px 80px #0008;padding:23px}.modal::backdrop{background:#000a;backdrop-filter:blur(3px)}.modal h2{margin:0 0 11px}#toast{position:fixed;bottom:18px;right:18px;z-index:50;padding:12px 18px;background:var(--panel);border:1px solid var(--accent2);color:var(--fg);border-radius:12px;box-shadow:0 8px 25px #0006;max-width:410px}.footer{margin-top:28px;text-align:center;color:var(--muted);font-size:12px}.note-line{padding:8px 0;border-bottom:1px solid var(--border)}.user-card{border:1px solid var(--border);padding:16px;border-radius:12px;margin-bottom:12px}input[type=date]{min-width:155px}@media(max-width:1000px){.sidebar{width:205px}.content{padding:19px}.teeth-grid{grid-template-columns:repeat(8,minmax(32px,1fr))}}@media(max-width:690px){.shell{display:block}.sidebar{position:static;width:100%;height:auto;padding:13px}.brand{font-size:20px}.nav{display:flex;overflow:auto;margin-top:5px}.nav button{white-space:nowrap}.sb-foot{display:none}.topbar{height:auto;padding:13px}.content{padding:14px}.grid,.two,.auth{grid-template-columns:1fr}.auth{margin:2vh auto}.auth-hero{padding:12px}.head h1{font-size:24px}.card{padding:14px}.tooth-type{max-width:none}.teeth-grid{grid-template-columns:repeat(8,minmax(30px,1fr))}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* NRLAB cloud: compact appearance, clock and live sync */
+:root[data-style="apple"][data-theme="light"]{--bg:#f4f6fb;--side:#fff;--panel:#fff;--panel2:#edf2f9;--fg:#172b43;--muted:#62738a;--border:#dbe4ef;--accent:#3180ff;--accent2:#276eda;--good:#20a67c}
+:root[data-style="apple"][data-theme="dark"]{--bg:#10151f;--side:#181f2b;--panel:#1c2533;--panel2:#26344a;--fg:#f5f8ff;--muted:#9daec8;--border:#354359;--accent:#87b5ff;--accent2:#347ace;--good:#7bcfb0}
+:root[data-style="aurora"][data-theme="dark"]{--bg:#101225;--side:#171a31;--panel:#20213b;--panel2:#2d2b50;--fg:#f6f2ff;--muted:#b5acd2;--border:#454265;--accent:#c2a2ff;--accent2:#7563bb;--good:#8edcbe}
+:root[data-style="aurora"][data-theme="light"]{--bg:#f4f0ff;--side:#f9f6ff;--panel:#fff;--panel2:#efe7ff;--fg:#33274c;--muted:#7c6a92;--border:#e1d6f1;--accent:#8861c1;--accent2:#7555bb;--good:#40a68c}
+:root[data-style="studio"][data-theme="light"]{--bg:#f7f4ed;--side:#efe9df;--panel:#fffdf8;--panel2:#f1e8db;--fg:#342a28;--muted:#7c736d;--border:#e3d9ca;--accent:#ad7954;--accent2:#996949;--good:#4d986c}
+:root[data-style="studio"][data-theme="dark"]{--bg:#201d1b;--side:#29241f;--panel:#302a25;--panel2:#41372f;--fg:#fbf2e9;--muted:#c4b2a4;--border:#584c43;--accent:#e4aa7c;--accent2:#9c6b49;--good:#83c49a}
+:root[data-accent="blue"]{--accent:#60a5fa;--accent2:#326ebd}
+:root[data-accent="violet"]{--accent:#bf9df8;--accent2:#7959b0}
+:root[data-accent="amber"]{--accent:#f7b66d;--accent2:#a66e39}
+:root[data-accent="green"]{--accent:#6fd1ae;--accent2:#337e75}
+:root[data-style="apple"] .card,:root[data-style="apple"] .btn{border-radius:20px}
+:root[data-style="aurora"] .card{box-shadow:0 12px 38px #422a7220;backdrop-filter:blur(10px)}
+:root[data-style="studio"] .card{border-radius:13px}
+.appearance-wrap{position:relative;display:inline-flex;align-items:center}
+.appearance-panel{position:absolute;right:0;top:calc(100% + 9px);width:min(290px,calc(100vw - 25px));padding:14px;z-index:55;border-radius:16px;border:1px solid var(--border);background:var(--panel);box-shadow:0 19px 55px #0006;animation:pop-in .19s ease both}
+.appearance-panel .select{width:100%;margin:6px 0 12px;color:var(--fg);background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+.appearance-label{color:var(--muted);font-size:12px;font-weight:750;display:block}
+.appearance-buttons{display:flex;gap:7px;margin-top:8px}
+.appearance-buttons .btn{min-width:0;flex:1;font-size:12px;padding:7px 5px;min-height:36px}
+.appearance-buttons .selected{outline:2px solid var(--accent)}
+.accent-dot{border:2px solid #fff4;width:25px;height:25px;border-radius:50%;box-shadow:0 2px 4px #0003}
+.accent-dot[aria-pressed="true"]{outline:2px solid var(--fg);outline-offset:2px}
+.sync-pill{display:flex;align-items:center;gap:7px;white-space:nowrap;color:var(--muted);font-size:11px}
+.sync-led{display:inline-block;width:7px;height:7px;border-radius:50%;background:#7dbfa3;box-shadow:0 0 7px #7dbfa36a}
+.sync-led.offline{background:#e8a66a;box-shadow:none}
+.clock-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:16px;margin-bottom:20px}
+.clock-panel{border:1px solid var(--border);border-radius:23px;background:linear-gradient(125deg,var(--panel),var(--panel2));padding:27px;min-height:245px;position:relative;overflow:hidden}
+.clock-panel:after{content:"";position:absolute;right:-75px;bottom:-110px;width:250px;height:250px;border:1px solid var(--accent);border-radius:50%;opacity:.17;pointer-events:none}
+.clock-overline{font-size:11px;letter-spacing:.17em;color:var(--accent);font-weight:850;text-transform:uppercase}
+.clock-main{font-size:clamp(47px,6.8vw,91px);line-height:1.12;letter-spacing:-.065em;font-weight:720;font-variant-numeric:tabular-nums;margin:16px 0 8px}
+.clock-date{color:var(--muted);font-size:17px;text-transform:capitalize}
+.clock-caption{font-size:12px;color:var(--muted);margin-top:15px}
+.calendar-panel{border:1px solid var(--border);border-radius:23px;padding:20px 22px;background:var(--panel)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;font-weight:800;text-transform:capitalize}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;text-align:center;font-size:12px}
+.cal-grid span{display:grid;place-items:center;min-height:26px;border-radius:9px}
+.cal-grid .week-title{font-size:10px;color:var(--muted);font-weight:800}
+.cal-grid .weekend{color:var(--muted)}
+.cal-grid .today{background:var(--accent2);color:#fff;font-weight:800}
+#view .card,.clock-layout{animation:rise-in .28s ease both}
+.modal[open]{animation:pop-in .23s ease both}
+@keyframes pop-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes rise-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:880px){.clock-layout{grid-template-columns:1fr}.clock-panel{min-height:180px}}
+@media(max-width:690px){.topbar .actions{gap:4px}.sync-pill{font-size:10px}.appearance-panel{right:-30px}.clock-main{font-size:58px}}
+@media(prefers-reduced-motion:reduce){.appearance-panel,.modal[open],#view .card,.clock-layout{animation:none!important}}
 </style></head><body>
 <div id="auth-screen" class="auth"><div class="auth-hero"><div class="brand"><span class="logo">N</span> NRLAB <span class="eyebrow">TEST CLOUD</span></div><h1>Заказы вашей лаборатории.<br><span style="color:var(--accent)">В одном облаке.</span></h1><p class="muted">Врач создаёт заказ с компьютера или телефона. Администратор проверяет регистрацию и отслеживает все этапы работ.</p><div class="notice">Это отдельная тестовая система. Пока не вводите реальные данные пациентов.</div></div><div class="card auth-form"><h2 id="auth-title">Вход в NRLAB</h2><div class="row" id="auth-tabs"><button class="btn primary" data-auth="login">Вход</button><button class="btn" data-auth="signup">Регистрация</button><button class="btn" data-auth="forgot">Забыли пароль</button></div>
 <form id="form-login" autocomplete="on"><div class="field"><label>Email</label><input name="email" type="email" required autocomplete="email"></div><div class="field"><label>Пароль</label><input name="password" type="password" required autocomplete="current-password"></div><button class="btn primary" type="submit">Войти</button></form>
 <form id="form-signup" class="hidden"><div class="field"><label>ФИО врача</label><input name="full_name" required minlength="2" maxlength="120"></div><div class="field"><label>Клиника (введите название)</label><input name="requested_clinic" required minlength="2" maxlength="120"></div><div class="field"><label>Email</label><input name="email" type="email" required></div><div class="field"><label>Пароль от 10 символов</label><input name="password" type="password" required minlength="10"></div><button class="btn primary" type="submit">Отправить заявку</button></form>
 <form id="form-forgot" class="hidden"><div class="field"><label>Email</label><input name="email" type="email" required></div><button class="btn primary" type="submit">Отправить письмо</button></form><form id="form-reset" class="hidden"><div class="field"><label>Новый пароль (10+ символов)</label><input name="password" type="password" minlength="10" required></div><button class="btn primary" type="submit">Изменить пароль</button></form><div id="auth-feedback" role="status"></div><p class="small muted">Пароли проверяет Supabase Auth. Доступ к работам появляется только после одобрения администратором.</p></div></div>
-<div id="app-screen" class="shell hidden"><aside class="sidebar"><div class="brand"><span class="logo">N</span><div>NRLAB<div class="eyebrow">ЗАКАЗ НАРЯД · CLOUD</div></div></div><div class="nav" id="nav"></div><div class="sb-foot"><div id="side-user"></div><button id="logout" class="btn" style="margin-top:11px">⇥ Выйти</button><div style="margin-top:10px">TEST CLOUD · отдельная база</div></div></aside><main class="main"><header class="topbar"><span id="breadcrumb" class="small muted">NRLAB / ОБЗОР</span><div class="actions"><span id="user-info" class="small muted"></span><button class="btn" id="theme" title="Переключить светлую / тёмную тему">☀ / ☾</button><button class="btn" id="refresh">↻ Обновить</button></div></header><section class="content" id="view"></section><div class="footer">NRLAB TEST CLOUD · хранение в Supabase · тестовые данные · не рабочий NRLAB</div></main></div>
+<div id="app-screen" class="shell hidden"><aside class="sidebar"><div class="brand"><span class="logo">N</span><div>NRLAB<div class="eyebrow">ЗАКАЗ НАРЯД · CLOUD</div></div></div><div class="nav" id="nav"></div><div class="sb-foot"><div id="side-user"></div><button id="logout" class="btn" style="margin-top:11px">⇥ Выйти</button><div style="margin-top:10px">TEST CLOUD · отдельная база</div></div></aside><main class="main"><header class="topbar"><span id="breadcrumb" class="small muted">NRLAB / ОБЗОР</span><div class="actions"><span class="sync-pill" title="Автоматическое обновление из Supabase"><span class="sync-led" id="sync-led"></span><span id="sync-status">Подключение…</span></span><span id="user-info" class="small muted"></span><div class="appearance-wrap" id="appearance-wrap"><button type="button" class="btn" id="view-menu-toggle" aria-expanded="false" aria-controls="view-panel" title="Дизайн и цвет сайта">◐ Вид</button><div id="view-panel" class="appearance-panel hidden"><label class="appearance-label" for="appearance-style">Оформление</label><select class="select" id="appearance-style"><option value="nrlab">NRLAB Classic</option><option value="apple">Apple Clean</option><option value="aurora">Aurora Glass</option><option value="studio">Studio Warm</option></select><span class="appearance-label">Тема</span><div class="appearance-buttons"><button type="button" class="btn" id="mode-light">☀ Светлая</button><button type="button" class="btn" id="mode-dark">☾ Тёмная</button></div><div class="appearance-label" style="margin-top:13px">Акцентный цвет</div><div class="appearance-buttons" id="accent-palette"><button class="accent-dot" type="button" data-palette="auto" style="background:#4b9a8b" aria-label="Цвет дизайна" title="Цвет дизайна"></button><button class="accent-dot" type="button" data-palette="blue" style="background:#5595f1" aria-label="Синий" title="Синий"></button><button class="accent-dot" type="button" data-palette="violet" style="background:#9a7acb" aria-label="Фиолетовый" title="Фиолетовый"></button><button class="accent-dot" type="button" data-palette="amber" style="background:#e4a36b" aria-label="Янтарный" title="Янтарный"></button><button class="accent-dot" type="button" data-palette="green" style="background:#4b9a8b" aria-label="Зелёный" title="Зелёный"></button></div></div></div><button class="btn" id="refresh">↻ Обновить</button></div></header><section class="content" id="view"></section><div class="footer">NRLAB TEST CLOUD · хранение в Supabase · тестовые данные · не рабочий NRLAB</div></main></div>
 <dialog class="modal" id="detail-dialog"><div id="detail-content"></div><div style="text-align:right;margin-top:16px"><button class="btn" onclick="document.getElementById('detail-dialog').close()">Закрыть</button></div></dialog>
 <dialog class="modal" id="warn-dialog"><h2>⚠ Внимание! Срок слишком короткий</h2><p>В выбранную дату мы не успеем изготовить и сдать работу. Суббота и воскресенье — выходные. Минимальный срок — <b>6 рабочих дней</b>.</p><p id="warn-date"></p><div class="row"><button class="btn primary" id="use-min-date">Выбрать допустимую дату</button><button class="btn" onclick="document.getElementById('warn-dialog').close()">Вернуться и исправить</button></div></dialog>
 <div id="toast" class="hidden" role="status" aria-live="polite"></div>
@@ -19,7 +67,7 @@ const sb=createClient(PROJECT_URL,KEY,{auth:{persistSession:true,autoRefreshToke
 const $=id=>document.getElementById(id), $$=q=>Array.from(document.querySelectorAll(q)), fv=(f,n)=>f.elements.namedItem(n).value;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=d=>d?new Date(d).toLocaleDateString('ru-RU'):'—';const money=v=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0}).format(Number(v)||0);
-const s={p:null,view:'overview',clinics:[],catalog:[],pl:[],prices:[],orders:[],items:[],amounts:[],files:[],profiles:[],selected:new Set(),tooth:new Map(),work:'zir_abutment',orderFilter:'',loading:false};
+const s={p:null,view:'overview',clinics:[],catalog:[],pl:[],prices:[],orders:[],items:[],amounts:[],files:[],profiles:[],selected:new Set(),tooth:new Map(),work:'zir_abutment',orderFilter:'',loading:false,unsaved:false,lastSync:0,syncError:false};
 const isAdmin=()=>s.p?.role==='admin',seePrices=()=>isAdmin()||!!s.p?.show_prices;
 const statusTxt={new:'Новый',in_progress:'В работе',ready:'Готов',delivered:'Сдан',cancelled:'Отменён'};
 const alertMsg=(m,bad=false)=>{const t=$('toast');t.textContent=m;t.style.borderColor=bad?'var(--danger)':'var(--accent2)';t.classList.remove('hidden');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.add('hidden'),5000)};
@@ -40,9 +88,28 @@ $('form-signup').onsubmit=async e=>{e.preventDefault();const f=e.target;try{cons
 $('form-forgot').onsubmit=async e=>{e.preventDefault();try{await need(sb.auth.resetPasswordForEmail(fv(e.target,'email').trim(),{redirectTo:location.origin+location.pathname}));$('auth-feedback').innerHTML='<div class="notice">Если адрес зарегистрирован, письмо отправлено.</div>'}catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}};
 $('form-reset').onsubmit=async e=>{e.preventDefault();try{await need(sb.auth.updateUser({password:fv(e.target,'password')}));setAuthTab('login');$('auth-feedback').textContent='Пароль изменён'}catch(ex){$('auth-feedback').textContent=errMsg(ex)}};
 $('logout').onclick=async()=>{await sb.auth.signOut();s.p=null;showAuth()};
-let theme='dark';try{theme=localStorage.getItem('nrlab-cloud-theme')||'dark'}catch(_e){}document.documentElement.dataset.theme=theme;
-$('theme').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;(()=>{try{localStorage.setItem('nrlab-cloud-theme',t)}catch(_e){}})()};
-$('refresh').onclick=()=>refresh(true);
+let theme='dark', design='nrlab', accent='auto';
+try{theme=localStorage.getItem('nrlab-cloud-theme')||'dark';design=localStorage.getItem('nrlab-cloud-design')||'nrlab';accent=localStorage.getItem('nrlab-cloud-accent')||'auto'}catch(_e){}
+function applyAppearance(){
+ if(!['dark','light'].includes(theme))theme='dark';
+ if(!['nrlab','apple','aurora','studio'].includes(design))design='nrlab';
+ if(!['auto','blue','violet','amber','green'].includes(accent))accent='auto';
+ document.documentElement.dataset.theme=theme;document.documentElement.dataset.style=design;
+ if(accent==='auto')delete document.documentElement.dataset.accent;else document.documentElement.dataset.accent=accent;
+ $('appearance-style').value=design;
+ $('mode-light').classList.toggle('selected',theme==='light');$('mode-dark').classList.toggle('selected',theme==='dark');
+ $$('[data-palette]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.palette===accent)));
+ try{localStorage.setItem('nrlab-cloud-theme',theme);localStorage.setItem('nrlab-cloud-design',design);localStorage.setItem('nrlab-cloud-accent',accent)}catch(_e){}
+}
+applyAppearance();
+$('view-menu-toggle').onclick=()=>{const open=$('view-panel').classList.toggle('hidden');$('view-menu-toggle').setAttribute('aria-expanded',String(!open))};
+$('appearance-style').onchange=e=>{design=e.target.value;applyAppearance()};
+$('mode-light').onclick=()=>{theme='light';applyAppearance()};$('mode-dark').onclick=()=>{theme='dark';applyAppearance()};
+$$('[data-palette]').forEach(b=>b.onclick=()=>{accent=b.dataset.palette;applyAppearance()});
+document.addEventListener('click',e=>{if(!e.target.closest('#appearance-wrap')){$('view-panel').classList.add('hidden');$('view-menu-toggle').setAttribute('aria-expanded','false')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('view-panel').classList.add('hidden');$('view-menu-toggle').setAttribute('aria-expanded','false')}});
+$('refresh').onclick=()=>{if(s.unsaved&&!confirm('В форме есть несохранённые изменения. Обновить данные и сбросить их?'))return;s.unsaved=false;refresh(true)};
+
 function showAuth(){ $('auth-screen').classList.remove('hidden');$('app-screen').classList.add('hidden')}
 function showApp(){ $('auth-screen').classList.add('hidden');$('app-screen').classList.remove('hidden')}
 async function refresh(show=false){if(s.loading)return;s.loading=true;try{
@@ -62,20 +129,39 @@ async function refresh(show=false){if(s.loading)return;s.loading=true;try{
  seePrices()?need(sb.from('order_amounts').select('*').limit(2000)):Promise.resolve([])
  ]);
  Object.assign(s,{clinics:cl||[],catalog:ca||[],orders:or||[],items:it||[],files:files||[],prices:pr||[],pl:pl||[],profiles:users||[],amounts:amounts||[]});
- if(s.view==='waiting')s.view='overview';render();if(show)alertMsg('Данные обновлены из облака');
-}catch(ex){alertMsg('Не удалось загрузить облачные данные: '+errMsg(ex),true);console.error(ex)}finally{s.loading=false}}
+ if(s.view==='waiting')s.view='overview';s.lastSync=Date.now();s.syncError=false;render();syncBadge();if(show)alertMsg('Данные обновлены из облака');
+}catch(ex){s.syncError=true;syncBadge();alertMsg('Не удалось загрузить облачные данные: '+errMsg(ex),true);console.error(ex)}finally{s.loading=false}}
 function nav(){const v=[['overview','▦ Обзор'],['new','＋ Новый заказ'],['orders','▤ Заказы'],['delivered','✓ Сданные']];if(isAdmin())v.push(['paid','● Закрытые (оплаченные)'],['invoice','▣ Счёт по работам'],['users','♙ Пользователи'],['clinics','▥ Клиники'],['prices','₽ Прайс-листы']);v.push(['settings','⚙ Настройки']);return v}
 function head(title,sub='',extra=''){return `<div class="head"><div><div class="eyebrow">NRLAB / CLOUD WORKSPACE</div><h1>${esc(title)}</h1><div class="muted">${esc(sub)}</div></div>${extra}</div>`}
-function render(){const authorized=s.p?.status==='approved'&&s.p.email_confirmed;
+function render(){s.unsaved=false;const authorized=s.p?.status==='approved'&&s.p.email_confirmed;
  $('nav').innerHTML=authorized?nav().map(([id,label])=>`<button data-nav="${id}" class="${s.view===id?'active':''}">${label}</button>`).join(''):'<span class="muted small">Ожидание регистрации</span>';
  $$('[data-nav]').forEach(b=>b.onclick=()=>go(b.dataset.nav));
  $('side-user').textContent=s.p?.full_name||'';$('user-info').textContent=s.p?.email||'';
  $('breadcrumb').textContent='NRLAB TEST CLOUD / '+(nav().find(x=>x[0]===s.view)?.[1]||'Кабинет');
  const fn={waiting:waiting,overview:overview,orders:()=>ordersPage(),new:newPage,delivered:()=>ordersPage('delivered'),paid:()=>ordersPage('paid'),invoice:invoicePage,users:usersPage,clinics:clinicsPage,prices:pricesPage,settings:settingsPage};
- $('view').innerHTML=(fn[s.view]||overview)();attach();}
-function go(page){s.view=page;render();window.scrollTo({top:0,behavior:'smooth'})}
+ $('view').innerHTML=(fn[s.view]||overview)();attach();renderClock();}
+function go(page){s.view=page;s.unsaved=false;render();window.scrollTo({top:0,behavior:'smooth'})}
 function waiting(){return head('Ожидание одобрения','Доступ к заказам пока закрыт')+`<div class="card"><h2>Статус: ${esc(s.p?.status==='pending'?'Ожидает администратора':s.p?.status==='blocked'?'Заблокирован':'Отклонён')}</h2><p>Клиника из заявки: <b>${esc(s.p?.requested_clinic)}</b></p><div class="notice">${s.p?.email_confirmed?'Email подтверждён. Администратор должен назначить клинику и одобрить заявку.':'Сначала подтвердите электронную почту.'}</div><button class="btn primary" data-refresh>Проверить снова</button><p class="small muted">Для первой учётной записи администратора после подтверждения email потребуется назначение роли в Supabase. Логин и пароль никому не сообщайте.</p></div>`}
-function overview(){const active=s.orders.filter(o=>!['delivered','cancelled'].includes(o.status));const upcoming=active.slice().sort((a,b)=>a.due_date.localeCompare(b.due_date)).slice(0,8);return head('Главная','Ваши облачные заказы, ближайшие сдачи и статусы',`<button class="btn primary" data-nav="new">+ Новый заказ</button>`)+`<div class="grid"><div class="card"><div class="muted small">Всего заказов</div><div class="kpi">${s.orders.length}</div></div><div class="card"><div class="muted small">В работе</div><div class="kpi">${active.length}</div></div><div class="card"><div class="muted small">Сдано</div><div class="kpi">${s.orders.filter(o=>o.delivered_at).length}</div></div></div><div class="card"><h2>Ближайшие сдачи</h2>${upcoming.length?`<div class="scroll"><table><thead><tr><th>Заказ</th><th>Клиника</th><th>Пациент / код</th><th>Срок</th><th>Статус</th>${seePrices()?'<th>Сумма</th>':''}<th></th></tr></thead><tbody>${upcoming.map(o=>orderRow(o,false)).join('')}</tbody></table></div>`:'<div class="empty">Предстоящих заказов пока нет</div>'}</div>`}
+
+function clockCalendar(){
+ const d=new Date(),y=d.getFullYear(),m=d.getMonth(),today=d.getDate();
+ const first=(new Date(y,m,1).getDay()+6)%7;
+ const last=new Date(y,m+1,0).getDate();
+ const labels=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>`<span class="week-title">${x}</span>`).join('');
+ let days='';for(let j=0;j<first;j++)days+='<span></span>';
+ for(let day=1;day<=last;day++){
+  const wd=(first+day-1)%7;days+=`<span class="${day===today?'today ':''}${wd>4?'weekend':''}">${day}</span>`;
+ }
+ return `<div class="calendar-panel"><div class="cal-head"><span>${new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(d)}</span><span class="small muted">Календарь</span></div><div class="cal-grid">${labels}${days}</div></div>`;
+}
+function renderClock(){
+ const d=new Date(),tim=new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(d);
+ const date=new Intl.DateTimeFormat('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d);
+ const c=$('clock-time'), dt=$('clock-date');if(c)c.textContent=tim;if(dt)dt.textContent=date;
+}
+function clockWidget(){return `<div class="clock-layout"><div class="clock-panel"><div class="clock-overline">NRLAB · Время лаборатории</div><div id="clock-time" class="clock-main">--:--:--</div><div class="clock-date" id="clock-date"></div><div class="clock-caption">Время вашего устройства · данные заказов из Supabase</div></div>${clockCalendar()}</div>`}
+
+function overview(){const active=s.orders.filter(o=>!['delivered','cancelled'].includes(o.status));const upcoming=active.slice().sort((a,b)=>a.due_date.localeCompare(b.due_date)).slice(0,8);return head('Главная','Ваши облачные заказы, ближайшие сдачи и статусы',`<button class="btn primary" data-nav="new">+ Новый заказ</button>`)+clockWidget()+`<div class="grid"><div class="card"><div class="muted small">Всего заказов</div><div class="kpi">${s.orders.length}</div></div><div class="card"><div class="muted small">В работе</div><div class="kpi">${active.length}</div></div><div class="card"><div class="muted small">Сдано</div><div class="kpi">${s.orders.filter(o=>o.delivered_at).length}</div></div></div><div class="card"><h2>Ближайшие сдачи</h2>${upcoming.length?`<div class="scroll"><table><thead><tr><th>Заказ</th><th>Клиника</th><th>Пациент / код</th><th>Срок</th><th>Статус</th>${seePrices()?'<th>Сумма</th>':''}<th></th></tr></thead><tbody>${upcoming.map(o=>orderRow(o,false)).join('')}</tbody></table></div>`:'<div class="empty">Предстоящих заказов пока нет</div>'}</div>`}
 function orderRow(o,select=true){return `<tr>${select?`<td><input type="checkbox" data-check="${o.id}" ${s.selected.has(o.id)?'checked':''}></td>`:''}<td><b>${esc(o.id.slice(0,8).toUpperCase())}</b><div class="small muted">${fmt(o.created_at)}</div></td><td>${esc(cName(o.clinic_id))}</td><td>${esc(o.patient_code)}</td><td>${esc(o.due_date)}</td><td><span class="pill ${o.status}">${esc(statusTxt[o.status]||o.status)}</span> ${o.paid_at?'<span class="pill paid">Оплачен</span>':''}</td>${seePrices()?`<td>${money(total(o))}</td>`:''}<td><button class="btn" data-open="${o.id}">Открыть</button></td></tr>`}
 function ordersPage(type='all'){let arr=s.orders.filter(o=>type==='delivered'?o.status==='delivered':type==='paid'?!!o.paid_at:true);if(s.orderFilter){const q=s.orderFilter.toLowerCase();arr=arr.filter(o=>[o.patient_code,o.id,cName(o.clinic_id),o.doctor_name].some(x=>String(x||'').toLowerCase().includes(q)))}const title=type==='paid'?'Закрытые (оплаченные)':type==='delivered'?'Сданные':'Заказы';return head(title,'Выбирайте заказы для скачивания; данные загружаются из общей базы',`<button class="btn primary" data-nav="new">+ Новый заказ</button>`)+`<div class="card"><div class="row"><div class="field"><label>Поиск по заказу, пациенту, клинике</label><input id="search-orders" value="${esc(s.orderFilter)}" placeholder="Начните вводить..."></div><button class="btn" id="select-all">Отметить все в списке</button><button class="btn" id="download-selected">Excel: выбранные</button><button class="btn" id="clear-selected">Очистить</button></div><p class="small muted">Отмечено заказов: ${s.selected.size}. Цены показываются только при разрешённом доступе.</p><div class="scroll"><table><thead><tr><th>✓</th><th>№</th><th>Клиника</th><th>Пациент / код</th><th>Срок</th><th>Статус</th>${seePrices()?'<th>Сумма</th>':''}<th></th></tr></thead><tbody>${arr.map(o=>orderRow(o,true)).join('')||`<tr><td colspan="9" class="muted">Заказов пока нет</td></tr>`}</tbody></table></div></div>`}
 function newPage(){const options=(isAdmin()?s.clinics:s.clinics.filter(c=>c.id===s.p.clinic_id)).filter(c=>c.active);return head('Новый заказ','Выберите вид протезирования, затем нажмите на зубы')+`<div class="two"><div><div class="card"><h2>01. Информация о заказе</h2><form id="new-form"><div class="row"><div class="field"><label>Клиника</label><select id="order-clinic" required>${options.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label>Пациент / код (используйте тестовый код)</label><input name="patient" maxlength="120" required placeholder="Например TEST-001"></div></div><div class="row" style="margin-top:12px"><div class="field"><label>Цвет VITA</label><input name="shade" placeholder="A2" maxlength="30"></div><div class="field"><label>Срок сдачи, минимум 6 рабочих дней</label><input name="due" id="due-input" type="date" required min="${minDue()}" value="${minDue()}"></div></div><div class="field" style="margin-top:12px"><label>Примечание</label><textarea name="notes" maxlength="2000" rows="2"></textarea></div></form><p class="small muted">Выходные исключены. При коротком сроке появится предупреждение.</p></div><div class="card"><h2>02. Зубная формула</h2><p class="muted small">Сначала выберите цвет/работу, затем зуб. Повторное нажатие снимает выбор.</p><div class="tooth-types">${s.catalog.filter(w=>w.active).map(w=>`<button class="tooth-type ${s.work===w.code?'active':''}" data-work="${esc(w.code)}"><span class="swatch" style="background:${esc(w.tint)}"></span>${esc(w.label)}</button>`).join('')}</div><div class="teeth-grid" id="teeth-grid">${teethHTML()}</div><div class="row"><button class="btn" id="add-general">+ Добавить выбранную работу без зуба</button><button class="btn" id="clear-teeth">Очистить</button></div><h3>Выбранные работы</h3><div id="chosen-teeth">${chosenHTML()}</div></div></div><div class="card"><h2>03. Сохранение и файлы</h2><div class="notice">Все записи и прикреплённые файлы будут сохранены в NRLAB TEST CLOUD и доступны согласно правам пользователя.</div><div class="field"><label>Файлы STL, OBJ, PDF, изображения — до 25 МБ за файл</label><input id="new-files" type="file" multiple></div><div class="row" style="margin-top:18px"><button type="submit" form="new-form" class="btn primary" id="submit-order">Сохранить заказ в облаке</button></div></div></div>`}
@@ -172,9 +258,33 @@ function excelCol(n){let s='';for(let i=n;i>0;i=Math.floor((i-1)/26))s=String.fr
 
 
 sb.auth.onAuthStateChange((event)=>{if(event==='PASSWORD_RECOVERY'){showAuth();setAuthTab('reset')}else if(event==='SIGNED_OUT'){showAuth()}else if(event==='SIGNED_IN'||event==='USER_UPDATED'){setTimeout(()=>refresh(),250)}});
+
+function syncBadge(){
+ const led=$('sync-led'),status=$('sync-status');if(!led||!status)return;
+ if(s.syncError){status.textContent='Нет связи';led.classList.add('offline');return;}
+ if(s.unsaved){status.textContent='Есть изменения';led.classList.remove('offline');return;}
+ if(s.lastSync){const time=new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit'}).format(new Date(s.lastSync));status.textContent='Синхр. '+time;led.classList.remove('offline')}
+ else status.textContent='Подключение…';
+}
+const AUTO_REFRESH_MS=25000;
+const AUTO_SAFE_VIEWS=new Set(['overview','orders','delivered','paid','users','waiting']);
+async function updateOnline(){
+ if(document.hidden||s.loading||s.unsaved||!s.p||!AUTO_SAFE_VIEWS.has(s.view))return;
+ if($('detail-dialog')?.open||$('warn-dialog')?.open)return;
+ const focus=document.activeElement;
+ if(focus?.closest('#view')&&focus.matches('input,select,textarea'))return;
+ await refresh(false);
+}
+document.addEventListener('input',e=>{if(e.target.closest('#view')&&e.target.matches('input,select,textarea')){s.unsaved=true;syncBadge()}},true);
+document.addEventListener('change',e=>{if(e.target.closest('#view')&&e.target.matches('input,select,textarea')){s.unsaved=true;syncBadge()}},true);
+window.addEventListener('online',()=>updateOnline());
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateOnline()});
+setInterval(updateOnline,AUTO_REFRESH_MS);
+setInterval(renderClock,1000);
+
 // Registration approval uses an event-delegated handler. A rerender cannot drop it.
 document.addEventListener('click',async event=>{
- const button=event.target.closest('button[data-save-user]');
+ const button=event.target instanceof Element ? event.target.closest('button[data-save-user]') : null;
  if(!button)return;
  event.preventDefault();
  if(button.disabled)return;
@@ -194,16 +304,15 @@ document.addEventListener('click',async event=>{
  const oldLabel=button.textContent;
  button.textContent='Сохранение…';
  try{
-   const saved=await need(sb.from('profiles')
-      .update({clinic_id:clinic||null,status,show_prices:show})
-      .eq('id',id)
-      .select('id,status,clinic_id,show_prices')
-      .single());
+   const saved=await need(sb.rpc('review_doctor_registration',{
+      p_user_id:id,p_clinic_id:clinic||null,p_status:status,p_show_prices:show
+   }));
    if(!saved||saved.status!==status||saved.clinic_id!==(clinic||null)||saved.show_prices!==show){
       throw Error('Сервер не подтвердил сохранение изменений');
    }
-   inform('Успешно сохранено: '+(status==='approved'?'врач одобрен':'статус обновлён'));
-   await refresh();
+   s.unsaved=false;
+   await refresh(false);
+   inform('Успешно сохранено: '+(status==='approved'?'врач одобрен':'изменения записаны в облако'));
  }catch(ex){
    console.error('NRLAB doctor approval error',ex);
    inform('Не удалось сохранить: '+errMsg(ex),true);
