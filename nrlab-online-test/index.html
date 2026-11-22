@@ -955,7 +955,7 @@ function syncBadge(){
 
 function cloudDataSignature(){
  const keys=['p','clinics','catalog','pl','prices','orders','items','files','profiles','amounts'];
- return JSON.stringify(keys.map(k=>s[k]));
+ return JSON.stringify(keys.map(k=>Array.isArray(s[k])?s[k].map(v=>JSON.stringify(v)).sort():s[k]));
 }
 let realtimeChannel=null,realtimeUserId=null,realtimeDebounce=0;
 function startRealtimeSubscription(userId){
@@ -977,7 +977,7 @@ function startRealtimeSubscription(userId){
 }
 
 const AUTO_REFRESH_MS=90000;
-const AUTO_SAFE_VIEWS=new Set(['overview','orders','delivered','paid','users','waiting']);
+const AUTO_SAFE_VIEWS=new Set(['overview','orders','delivered','paid','requests','users','clinics','prices','invoice','settings','waiting']);
 async function updateOnline(){
  if(document.hidden||s.loading||s.unsaved||!s.p||!AUTO_SAFE_VIEWS.has(s.view))return;
  if($('detail-dialog')?.open||$('warn-dialog')?.open)return;
