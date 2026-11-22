@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#177d70"><title>NRLAB · Офлайн-заказы</title><link rel="manifest" href="./manifest.webmanifest">
+<style>
+:root{font:15px/1.5 system-ui,'Segoe UI',Arial,sans-serif;color-scheme:dark;--bg:#0b161a;--card:#18282c;--card2:#22363b;--border:#375153;--text:#f0f7f5;--muted:#9eb9b5;--accent:#66c5b1}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);margin:0}
+header{background:#122126;border-bottom:1px solid var(--border);padding:16px max(16px,calc((100vw - 1060px)/2));display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:800;letter-spacing:-1px}.logo small{font-size:11px;color:var(--accent);letter-spacing:1px}
+main{max-width:1100px;margin:auto;padding:20px 16px 70px}.card{border:1px solid var(--border);background:var(--card);border-radius:15px;padding:18px;margin:14px 0}
+h1{font-size:clamp(24px,4vw,32px);margin:0 0 4px}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:15px 0 8px}
+.muted,small{color:var(--muted)}.notice{border:1px solid #a6823a;border-radius:12px;padding:13px;background:#a6823a18;line-height:1.6}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.field{min-width:180px;flex:1}label{display:block;font-weight:650;font-size:13px;margin:8px 0 5px}input,select,textarea{color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:10px;width:100%;font:inherit}textarea{min-height:77px;resize:vertical}
+button{font:inherit;cursor:pointer;background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:10px 14px}
+button:hover{border-color:var(--accent)}.primary{background:#317c6f;border-color:#317c6f;color:#fff;font-weight:750}.primary:disabled{opacity:.5}
+.works{display:flex;gap:7px;flex-wrap:wrap}.work{font-size:12px;padding:9px 10px}.work.current{outline:2px solid var(--accent)}.dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px}
+.teeth{display:grid;grid-template-columns:repeat(16,minmax(35px,1fr));gap:5px;min-width:660px;margin:12px 0}.arch{overflow:auto}.tooth{height:56px;border-radius:8px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px}.tooth.selected{border:2px solid #fff}.tooth .tooth-symbol{font-size:17px;line-height:1}
+.file-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:11px}.scan{padding:11px;border:1px solid var(--border);border-radius:11px}.scan input{width:100%;font-size:12px;padding:7px}.scan b{font-size:13px}
+.queue-item{border-bottom:1px solid var(--border);padding:12px 0}.queue-item:last-child{border:0}
+.queue-item .row{justify-content:space-between}.pending{color:#f2c77b}
+footer{margin-top:28px;font-size:12px;color:var(--muted);text-align:center}
+#message{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);max-width:95vw;background:#19352f;color:#fff;z-index:100;padding:14px;border:1px solid #63b8a7;border-radius:10px;display:none}
+@media(max-width:650px){header{padding:12px 16px}.card{padding:13px}.row>.field{flex-basis:100%}.teeth{min-width:640px}}
+</style></head><body>
+<header><div class="logo">NRLAB <small>· OFFLINE</small></div><div class="row"><span id="connectivity" class="muted">Нет сети</span><button type="button" id="cloud">Открыть облако</button></div></header>
+<main>
+<h1>Новый заказ · офлайн</h1>
+<p class="muted">Без интернета можно заполнить заказ, выбрать работы, прикрепить сканы и сохранить на этом устройстве.</p>
+<div class="notice" id="offline-warning"><b>Важное напоминание:</b> локальный заказ ещё не поступил в лабораторию. Перед закрытием при возможности подключите интернет, откройте облачное приложение и дождитесь статуса «Синхронизировано».</div>
+<section class="card" id="not-ready" hidden><h2>Первый вход требует интернета</h2><p>Подключитесь к сети, откройте NRLAB CLOUD и войдите в подтверждённую учётную запись. После этого этот браузер сохранит справочники для офлайн-заказов.</p><button class="primary" type="button" id="try-cloud">Перейти к онлайн-входу</button></section>
+<div id="workspace" hidden>
+<section class="card"><h2>01 · Данные заказ-наряда</h2><p class="muted" id="user-label"></p>
+<form id="offline-form"><div class="row"><div class="field"><label>Клиника</label><select id="clinic" required></select></div><div class="field"><label>Пациент / код заказа (тестовый)</label><input name="patient" required maxlength="120" placeholder="TEST-001"></div></div>
+<div class="row"><div class="field"><label>Оттенок VITA</label><select name="shade"><option value="">Без указания</option><option>A1</option><option>A2</option><option>A3</option><option>A3.5</option><option>A4</option><option>B1</option><option>B2</option><option>B3</option><option>B4</option><option>C1</option><option>C2</option><option>C3</option><option>C4</option><option>D2</option><option>D3</option><option>D4</option><option>BL1</option><option>BL2</option><option>BL3</option><option>BL4</option></select></div><div class="field"><label>Срок сдачи — не раньше 6 рабочих дней</label><input type="date" name="due" required id="due"><small>Ближайшая дата: <b id="earliest"></b>. Суббота и воскресенье не считаются.</small></div></div>
+<div class="field"><label>Примечание</label><textarea name="notes" maxlength="2000"></textarea></div></form></section>
+<section class="card"><h2>02 · Зубная формула</h2><p class="muted">Сначала нажмите вид работы (цвет), затем зуб. Второе нажатие снимает отметку.</p>
+<div id="work-legend" class="works"></div><h3>Верхняя челюсть</h3><div class="arch"><div id="upper" class="teeth"></div></div><h3>Нижняя челюсть</h3><div class="arch"><div id="lower" class="teeth"></div></div><p id="selected-info" class="muted">Зубы не выбраны</p></section>
+<section class="card"><h2>03 · Прикреплённые сканы (необязательно)</h2><div class="file-grid">
+<div class="scan"><b>Верхняя челюсть</b><input type="file" data-role="upper_jaw" multiple></div>
+<div class="scan"><b>Нижняя челюсть</b><input type="file" data-role="lower_jaw" multiple></div>
+<div class="scan"><b>Скан-маркер</b><input type="file" data-role="scan_marker" multiple></div>
+<div class="scan"><b>Дополнительные файлы</b><input type="file" data-role="other" multiple></div>
+</div><p class="muted">До 25 МБ на один файл. Файлы сохраняются локально вместе с заказом и отправляются при синхронизации.</p>
+<div class="row"><button type="button" class="primary" id="save">Сохранить заказ на устройстве</button><button type="button" id="go-sync">Синхронизировать при наличии интернета</button></div></section>
+</div>
+<section class="card"><h2>Очередь отправки <span id="queue-count"></span></h2><div id="queue-list" class="muted">Загрузка локальных данных…</div></section>
+<footer>NRLAB TEST CLOUD · локальные заказы хранятся в браузере этого устройства. Пользуйтесь только тестовыми данными до проверки безопасности.</footer>
+</main><div id="message" role="status" aria-live="polite"></div>
+<script src="./offline-store.js"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id),store=window.NRLABOffline;
+let snapshot=null,owner=null,dirty=false,work='',selected=new Map(),pending=0;
+const upper=[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28];
+const lower=[48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+function minDue(){const d=new Date();let i=0;while(i<6){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)i++}return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function validDue(v){if(!v||v<minDue())return false;const d=new Date(v+'T12:00:00');return d.getDay()!==0&&d.getDay()!==6}
+function msg(text){const n=$('message');n.textContent=text;n.style.display='block';clearTimeout(window.msgTimer);window.msgTimer=setTimeout(()=>n.style.display='none',6000)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+function onlineStatus(){const on=navigator.onLine;$('connectivity').textContent=on?'Есть интернет (требуется проверка связи)':'Нет интернета';$('go-sync').disabled=!on}
+function teeth(){
+ for(const [id,arr] of [['upper',upper],['lower',lower]]){
+  $(id).innerHTML=arr.map(n=>{
+   const code=selected.get(String(n)),w=snapshot.catalog.find(v=>v.code===code);
+   return '<button type="button" class="tooth '+(code?'selected':'')+'" data-tooth="'+n+'" style="'+(w?'background:'+esc(w.tint||'#337d72')+';color:#10231e':'')+'"><span class="tooth-symbol">♢</span>'+n+'</button>';
+  }).join('');
+ }
+ for(const b of document.querySelectorAll('[data-tooth]')){
+  b.onclick=()=>{const id=b.dataset.tooth;selected.get(id)===work?selected.delete(id):selected.set(id,work);dirty=true;teeth()};
+ }
+ const info=[...selected].map(([n,code])=>n+': '+(snapshot.catalog.find(w=>w.code===code)?.label||code));
+ $('selected-info').textContent=info.length?info.join(' · '):'Зубы не выбраны';
+}
+async function queueView(){
+ if(!owner){$('queue-list').textContent='Нет локальной учётной записи';return}
+ const list=await store.orders(owner);pending=list.length;$('queue-count').textContent='· '+pending;
+ $('queue-list').textContent='';
+ if(!pending){$('queue-list').textContent='Нет заказов, ожидающих синхронизации';return}
+ for(const q of list){
+  const item=document.createElement('div');item.className='queue-item';
+  const title=document.createElement('div');title.className='row';
+  const name=document.createElement('b');name.textContent=q.patient+' · '+q.due;
+  const status=document.createElement('span');status.className='pending';status.textContent=q.remoteId?'Заказ создан в облаке, не все файлы отправлены':'Ожидает интернета / синхронизации';
+  title.append(name,status);item.append(title);
+  if(q.error){const err=document.createElement('p');err.className='muted';err.textContent='Ошибка последней отправки: '+q.error;item.append(err)}
+  if(!q.remoteId){
+   const actions=document.createElement('div');actions.className='row';
+   const edit=document.createElement('button');edit.type='button';edit.textContent='Изменить срок';
+   edit.onclick=async()=>{const v=prompt('Новая дата сдачи (ГГГГ-ММ-ДД)',q.due);if(v===null)return;if(!validDue(v)){msg('Укажите будний день не раньше '+minDue());return}q.due=v;q.error='';await store.update(q);await queueView()};
+   const remove=document.createElement('button');remove.type='button';remove.textContent='Удалить локальный черновик';
+   remove.onclick=async()=>{if(!confirm('Удалить только локальный заказ? Он ещё не создан в облаке.'))return;await store.remove(q.id);await queueView()};
+   actions.append(edit,remove);item.append(actions);
+  }
+  $('queue-list').append(item);
+ }
+}
+async function save(){
+ if(!snapshot){msg('Войдите онлайн хотя бы один раз на этом устройстве');return}
+ const f=$('offline-form'),patient=f.elements.patient.value.trim(),due=f.elements.due.value;
+ if(!patient){msg('Введите код пациента');return}
+ if(!validDue(due)){msg('Срок слишком короткий либо выбран выходной. Ближайшая дата: '+minDue());return}
+ if(!selected.size){msg('Отметьте хотя бы одну работу на зубной формуле');return}
+ const files=[];
+ for(const input of document.querySelectorAll('[data-role]'))for(const file of input.files||[]){
+  if(file.size>25000000){msg('Файл '+file.name+' больше 25 МБ');return}
+  files.push({id:crypto.randomUUID(),name:file.name,type:file.type,size:file.size,file,file_role:input.dataset.role,done:false});
+ }
+ const btn=$('save');btn.disabled=true;
+ try{
+  await store.addOrder({id:crypto.randomUUID(),ownerId:owner,clinicId:$('clinic').value,patient,shade:f.elements.shade.value,due,
+    notes:f.elements.notes.value,items:[...selected].map(([tooth,work_code])=>({tooth,work_code,qty:1})),
+    files,createdAt:Date.now(),error:''});
+  selected.clear();f.reset();f.elements.due.value=minDue();
+  document.querySelectorAll('[data-role]').forEach(input=>input.value='');
+  dirty=false;teeth();await queueView();
+  msg('Сохранено локально. Для отправки в лабораторию подключите интернет и откройте облачный кабинет.');
+  try{await navigator.storage?.persist?.()}catch(_){}
+ }catch(e){msg('Не удалось сохранить заказ: '+(e?.message||e)+'. Освободите память устройства и попробуйте снова')}
+ finally{btn.disabled=false}
+}
+async function start(){
+ if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+ onlineStatus();$('due').value=minDue();$('earliest').textContent=new Date(minDue()+'T12:00:00').toLocaleDateString('ru-RU');
+ snapshot=await store.lastSnapshot().catch(()=>null);
+ if(snapshot?.p?.status==='approved'&&snapshot?.p?.email_confirmed){
+  owner=snapshot.p.id;$('workspace').hidden=false;$('user-label').textContent='Врач: '+(snapshot.p.full_name||snapshot.p.email);
+  const clinics=snapshot.clinics.filter(c=>c.active&&(snapshot.p.role==='admin'||c.id===snapshot.p.clinic_id));
+  $('clinic').innerHTML=clinics.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join('');
+  if(!clinics.length){$('save').disabled=true;msg('Клиника не назначена; подключитесь к интернету для обновления')}
+  const catalog=snapshot.catalog.filter(w=>w.active);
+  work=catalog[0]?.code||'';
+  $('work-legend').innerHTML=catalog.map(w=>'<button type="button" class="work '+(w.code===work?'current':'')+'" data-work="'+esc(w.code)+'"><span class="dot" style="background:'+esc(w.tint||'#65c4af')+'"></span>'+esc(w.label)+'</button>').join('');
+  document.querySelectorAll('[data-work]').forEach(b=>b.onclick=()=>{work=b.dataset.work;document.querySelectorAll('[data-work]').forEach(x=>x.classList.toggle('current',x===b));dirty=true});
+  teeth();
+ }else $('not-ready').hidden=false;
+ await queueView();
+}
+document.getElementById('cloud').onclick=()=>location.assign('./');
+document.getElementById('try-cloud').onclick=()=>location.assign('./');
+document.getElementById('go-sync').onclick=()=>location.assign('./');
+document.getElementById('save').onclick=save;
+document.getElementById('offline-form').addEventListener('input',()=>{dirty=true});
+window.addEventListener('online',onlineStatus);window.addEventListener('offline',onlineStatus);
+window.addEventListener('beforeunload',event=>{if(dirty||pending>0){event.preventDefault();event.returnValue=''}});
+start().catch(e=>msg('Ошибка локальной программы: '+(e.message||e)));
+</script></body></html>
