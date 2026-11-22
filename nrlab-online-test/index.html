@@ -602,11 +602,47 @@ dialog.modal::backdrop{background:#020a09b8}
 <dialog class="modal" id="detail-dialog"><div id="detail-content"></div><div style="text-align:right;margin-top:16px"><button class="btn" onclick="document.getElementById('detail-dialog').close()">Закрыть</button></div></dialog>
 <dialog class="modal" id="warn-dialog" aria-labelledby="warn-title" aria-describedby="warn-reason"><div class="warn-head"><span class="warn-icon" aria-hidden="true">!</span><div><h2 id="warn-title">Срок слишком короткий</h2><p class="warn-subtitle">Нам необходимо минимум 6 рабочих дней</p></div></div><p class="warn-reason" id="warn-reason">Суббота и воскресенье — выходные.</p><div class="warn-suggestion"><span>Ближайшая допустимая дата</span><strong id="warn-date"></strong></div><div class="warn-actions"><button type="button" class="btn" id="warn-close">Изменить дату</button><button type="button" class="btn primary" id="use-min-date">Выбрать дату</button></div></dialog>
 <div id="toast" class="hidden" role="status" aria-live="polite"></div>
-<script src="./offline-store.js"></script><script type="module">
+<script src="./offline-store.js"></script>
+<script>
+/* NRLAB: local desktop auth tabs work even if external Supabase JS cannot load. */
+(function(){
+ const names={login:'Вход в NRLAB',signup:'Регистрация врача',forgot:'Восстановление пароля'};
+ const tabButtons=document.querySelectorAll('#auth-tabs button[data-auth]');
+ const select=(name)=>{
+  for(const key of ['login','signup','forgot','reset']){
+   const form=document.getElementById('form-'+key);
+   if(form)form.classList.toggle('hidden',key!==name);
+  }
+  const title=document.getElementById('auth-title');
+  if(title)title.textContent=names[name]||'NRLAB';
+  const feedback=document.getElementById('auth-feedback');
+  if(feedback)feedback.textContent='';
+  for(const button of tabButtons){
+   const active=button.dataset.auth===name;
+   button.classList.toggle('current',active);
+   button.setAttribute('aria-pressed',String(active));
+  }
+ };
+ for(const button of tabButtons)button.addEventListener('click',()=>select(button.dataset.auth));
+ for(const id of ['form-login','form-signup','form-forgot']){
+  const form=document.getElementById(id);
+  if(form)form.addEventListener('submit',event=>{
+   if(window.NRLABAuthReady)return;
+   event.preventDefault();
+   event.stopImmediatePropagation();
+   const feedback=document.getElementById('auth-feedback');
+   if(feedback)feedback.textContent='Невозможно связаться с модулем авторизации. Подключите интернет, перезапустите NRLAB или откройте облачный сайт в браузере.';
+  },true);
+ }
+})();
+</script>
+<script type="module">
 
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2.95.0';
+const AUTH_RETURN_URL='https://alimahmuddov-beep.github.io/onedent-calculator/nrlab-online-test/';
 const PROJECT_URL='https://fwdnoudiydnkovvnjhto.supabase.co', KEY='sb_publishable_HB41rFaoCHq5Ftve2uBR2Q_nRThVuzy';
 const sb=createClient(PROJECT_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+window.NRLABAuthReady=true;
 const $=id=>document.getElementById(id), $$=q=>Array.from(document.querySelectorAll(q)), fv=(f,n)=>f.elements.namedItem(n).value;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=d=>d?new Date(d).toLocaleDateString('ru-RU'):'—';const money=v=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0}).format(Number(v)||0);
@@ -635,8 +671,8 @@ if(error)throw error;if(!data?.user)throw Error('Сервер не вернул 
 f.elements.namedItem('password').value='';$('auth-feedback').innerHTML='<div class="hint">Вход выполнен. Открываем кабинет…</div>';
 await refresh(true);
 }catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}finally{btn.disabled=false}};
-$('form-signup').onsubmit=async e=>{e.preventDefault();const f=e.target;try{const {error}=await sb.auth.signUp({email:fv(f,'email').trim(),password:fv(f,'password'),options:{data:{full_name:fv(f,'full_name').trim(),requested_clinic:fv(f,'requested_clinic').trim()},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;f.elements.namedItem('password').value='';setAuthTab('login');$('auth-feedback').innerHTML='<div class="notice">Заявка создана. Подтвердите email; после этого администратор сможет одобрить доступ.</div>'}catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}};
-$('form-forgot').onsubmit=async e=>{e.preventDefault();try{await need(sb.auth.resetPasswordForEmail(fv(e.target,'email').trim(),{redirectTo:location.origin+location.pathname}));$('auth-feedback').innerHTML='<div class="notice">Если адрес зарегистрирован, письмо отправлено.</div>'}catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}};
+$('form-signup').onsubmit=async e=>{e.preventDefault();const f=e.target;try{const {error}=await sb.auth.signUp({email:fv(f,'email').trim(),password:fv(f,'password'),options:{data:{full_name:fv(f,'full_name').trim(),requested_clinic:fv(f,'requested_clinic').trim()},emailRedirectTo:AUTH_RETURN_URL}});if(error)throw error;f.elements.namedItem('password').value='';setAuthTab('login');$('auth-feedback').innerHTML='<div class="notice">Заявка создана. Подтвердите email; после этого администратор сможет одобрить доступ.</div>'}catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}};
+$('form-forgot').onsubmit=async e=>{e.preventDefault();try{await need(sb.auth.resetPasswordForEmail(fv(e.target,'email').trim(),{redirectTo:AUTH_RETURN_URL}));$('auth-feedback').innerHTML='<div class="notice">Если адрес зарегистрирован, письмо отправлено.</div>'}catch(ex){$('auth-feedback').innerHTML='<div class="error">'+esc(errMsg(ex))+'</div>'}};
 $('form-reset').onsubmit=async e=>{e.preventDefault();try{await need(sb.auth.updateUser({password:fv(e.target,'password')}));setAuthTab('login');$('auth-feedback').textContent='Пароль изменён'}catch(ex){$('auth-feedback').textContent=errMsg(ex)}};
 $('logout').onclick=async()=>{if(s.pendingLocal&&!confirm('Есть заказы, ещё не отправленные в облако. Для синхронизации требуется интернет. Всё равно выйти?'))return;await sb.auth.signOut();window.NRLABOffline?.clearActive();s.p=null;s.localQueue=[];s.pendingLocal=0;showAuth()};
 let theme='dark', design='nrlab', accent='auto';
